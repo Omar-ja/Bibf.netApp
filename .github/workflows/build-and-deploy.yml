@@ -14,8 +14,8 @@ jobs:
 
       - name: Install .NET
         uses: actions/setup-dotnet@v2
-          with: 
-            dotnet-version: 6
+        with: 
+          dotnet-version: 6
       
       - name: Cache .NET Dependencies
         uses: actions/cache@v3
@@ -32,7 +32,8 @@ jobs:
 
       - name: Upload for Deployment
         uses: actions/upload-artifact@v3
-          with: .net-app
+        with: 
+          name: .net-app
           path: ./myapp
 
   deploy:
@@ -41,14 +42,14 @@ jobs:
     steps:
       - name: Download App From Build
         uses: actions/download-artifact@v3
-          with:
+        with:
           name: .net-app
       
       - name: Deploy App
         uses: azure/webapps-deploy@v2
-          with:
-            app-name: mydotnetapp08-06-2022
-            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-            package: '.'
+        with:
+          app-name: mydotnetapp08-06-2022
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: '.'
 
 
