@@ -10,30 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps: 
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Install .NET
-      uses: actions/setup-dotnet@v2
-        with: 
-          dotnet-version: 6
-    
-    - name: Cache .NET Dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{runner.os}}-nuget-${{hashFiles(**/packages.lock.json)}}
-        restore-keys: |
-        ${{runner.os}}-nuget-
-    - name: Build App
-      run: dotnet build --configuration Release
+      - name: Install .NET
+        uses: actions/setup-dotnet@v2
+          with: 
+            dotnet-version: 6
+      
+      - name: Cache .NET Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{runner.os}}-nuget-${{hashFiles(**/packages.lock.json)}}
+          restore-keys: |
+          ${{runner.os}}-nuget-
+      - name: Build App
+        run: dotnet build --configuration Release
 
-    - name: Publish App
-      run: dotnet publish -c Release -o ./myapp
+      - name: Publish App
+        run: dotnet publish -c Release -o ./myapp
 
-    - name: Upload for Deployment
-      uses: actions/upload-artifact@v3
-        with: .net-app
-        path: ./myapp
+      - name: Upload for Deployment
+        uses: actions/upload-artifact@v3
+          with: .net-app
+          path: ./myapp
 
   deploy:
     runs-on: ubuntu-latest
